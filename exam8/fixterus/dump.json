@@ -1,0 +1,117 @@
+[
+{
+  "model": "webapp.product",
+  "pk": 1,
+  "fields": {
+    "name": "Курица",
+    "category": "meat",
+    "description": "описание продукта 1",
+    "image": "images/kurica_v_kurtke.jpg"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 2,
+  "fields": {
+    "name": "Бибика",
+    "category": "other",
+    "description": "Мафынка",
+    "image": "images/4Матрица.jpg"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 3,
+  "fields": {
+    "name": "chiken",
+    "category": "other",
+    "description": "123",
+    "image": ""
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 4,
+  "fields": {
+    "name": "Жиза",
+    "category": "other",
+    "description": "Самая настоящяя ЖИЗА",
+    "image": "images/nelzya-prosto-tak-vzyat-i-boromir-mem_44391899_orig_.jpg"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 5,
+  "fields": {
+    "name": "123",
+    "category": "vegetables",
+    "description": "asdasd",
+    "image": "images/дамп_дата_json.png"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 5,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "description": "desc",
+    "grade": 3,
+    "check_moderated": true,
+    "created_at": "2022-03-05",
+    "updated_at": "2022-03-05"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 6,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "description": "desc",
+    "grade": 4,
+    "check_moderated": true,
+    "created_at": "2022-03-05",
+    "updated_at": "2022-03-05"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 7,
+  "fields": {
+    "author": 2,
+    "product": 1,
+    "description": "user good chiken",
+    "grade": 2,
+    "check_moderated": true,
+    "created_at": "2022-03-05",
+    "updated_at": "2022-03-05"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 8,
+  "fields": {
+    "author": 5,
+    "product": 1,
+    "description": "user desc",
+    "grade": 2,
+    "check_moderated": true,
+    "created_at": "2022-03-05",
+    "updated_at": "2022-03-05"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 9,
+  "fields": {
+    "author": 4,
+    "product": 1,
+    "description": "not mod",
+    "grade": 2,
+    "check_moderated": false,
+    "created_at": "2022-03-05",
+    "updated_at": "2022-03-05"
+  }
+}
+]

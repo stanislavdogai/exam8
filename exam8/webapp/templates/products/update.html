@@ -3,9 +3,8 @@
 
 {% block content %}
     <h1>Редактирование продукта</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% include "partial/form.html" with button_text="Изменить"  %}
     </form>
-
 {% endblock %}
 

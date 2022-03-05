@@ -4,7 +4,6 @@ from django.db import models
 from django.urls import reverse
 
 CATEGORY = [('other', 'Разное'), ('milk', 'Молочная продукция'), ('meat', 'МЯСО'), ('vegetables', 'Овощи'), ('drink', 'Напитки')]
-# Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=30, null=False, blank=False, verbose_name='Название')
     category = models.CharField(max_length=15, default='other', null=False, blank=False, choices=CATEGORY, verbose_name='Категория')
@@ -12,7 +11,13 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name='Картинка')
 
     class Meta:
-        pass
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
+        db_table = 'products'
+
+    def __str__(self):
+        return f'{self.name}'
+
 
     def get_absolute_url(self):
         return reverse('webapp:index')
@@ -39,6 +44,9 @@ class Review(models.Model):
     updated_at = models.DateField(auto_now_add=True, verbose_name="Дата изменения")
 
     class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        db_table = 'reviews'
         permissions = [
             ('can_view_not_moderated_list', 'Can view not moderated list')
         ]
@@ -46,3 +54,5 @@ class Review(models.Model):
     def get_absolute_url(self):
         return reverse('webapp:index')
 
+    def __str__(self):
+        return f'{self.author.username}===Оценка: {self.grade}'

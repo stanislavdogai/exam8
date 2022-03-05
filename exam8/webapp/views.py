@@ -1,8 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 
-# Create your views here.
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
@@ -17,12 +15,19 @@ class ProductIndexView(ListView):
     template_name = 'products/index.html'
 
 
-
 class ProductCreateView(PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'products/create.html'
     permission_required = 'webapp.add_product'
+
+    def get_product_form(self):
+        form_kwargs = {'instance' : self.object.profile}
+        if self.request.method == 'POST':
+            form_kwargs['data'] = self.request.POST
+            form_kwargs['files'] = self.request.FILES
+        return ProductForm(**form_kwargs)
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -31,9 +36,9 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         reviews = self.object.review.all()
-        # reviews = self.object.review.filter(check_moderated=True)
         context['reviews'] = reviews
         return context
+
 
 class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     model = Product
@@ -42,15 +47,18 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'webapp.delete_product'
 
 
-
 class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'products/update.html'
     permission_required = 'webapp.change_product'
 
-    def has_permission(self):
-        return super().has_permission() and self.request.user in self.get_object().users.all()
+    def get_product_form(self):
+        form_kwargs = {'instance' : self.object.profile}
+        if self.request.method == 'POST':
+            form_kwargs['data'] = self.request.POST
+            form_kwargs['files'] = self.request.FILES
+        return ProductForm(**form_kwargs)
 
 
 class ReviewCreate(LoginRequiredMixin, CreateView):
@@ -66,8 +74,10 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         review.save()
         return redirect('webapp:product_view', pk=product.pk)
 
+
 class ReviewDelete(PermissionRequiredMixin, View):
     permission_required = 'webapp.delete_review'
+
     def get(self, request, *args, **kwargs):
         review = get_object_or_404(Review, pk=kwargs.get('pk'))
         review.delete()
@@ -90,6 +100,7 @@ class ReviewUpdate(PermissionRequiredMixin, UpdateView):
     def has_permission(self):
         return super().has_permission() and self.request.user in self.get_object().users.all()
 
+
 class ReviewNotModeratedView(ListView):
     model = Review
     template_name = 'reviews/not_moderated.html'
@@ -99,6 +110,7 @@ class ReviewNotModeratedView(ListView):
         context = super().get_context_data(**kwargs)
         context['reviews'] = Review.objects.filter(check_moderated=False)
         return context
+
 
 class CheckReview(PermissionRequiredMixin, UpdateView):
     model = Review

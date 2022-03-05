@@ -26,39 +26,37 @@
         {% endif %}
     </div>
 </div>
-    <div>
-        <table class="table mt-5">
-  <thead>
-    <tr>
-      <th scope="col">Пользователь</th>
-      <th scope="col">Описание</th>
-      <th scope="col">Оценка</th>
-        <th scope="col">email</th>
-         {% if user.is_authenticated and perms.webapp.delete_product or perms.webapp.delete_update %}
-        <th scope="col">Удалить</th>
-        <th scope="col">Изменить</th>
-        {% endif %}
-    </tr>
-  </thead>
-  <tbody>
-      {% for review in reviews %}
-          {% if review.check_moderated == True %}
-    <tr>
-      <td><a href="{% url 'accounts:profile' review.author.pk %}">{{ review.author.username }}</a></td>
-      <td>{{ review.description }}</td>
-      <td>{{ review.grade }}</td>
-        <td>{{ review.author.email }}</td>
-        {% if user.is_authenticated and perms.webapp.delete_product or perms.webapp.delete_update %}
-    <td><a href="{% url 'webapp:review_delete' review.pk %}"><i class="fa-solid fa-trash"></i></a></td>
-    <td><a href="{% url 'webapp:review_update' review.pk %}"><i class="fa-solid fa-pen"></i></a></td>
-            {% endif %}
-    </tr>
-          {% endif %}
-      {% endfor %}
-
-  </tbody>
-</table>
-
-    </div>
+<div>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Пользователь</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Оценка</th>
+                <th scope="col">email</th>
+                {% if user.is_authenticated and perms.webapp.delete_product or perms.webapp.delete_update %}
+                    <th scope="col">Удалить</th>
+                    <th scope="col">Изменить</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+                {% if review.check_moderated == True %}
+                    <tr>
+                        <td><a href="{% url 'accounts:profile' review.author.pk %}">{{ review.author.username }}</a></td>
+                        <td>{{ review.description }}</td>
+                        <td>{{ review.grade }}</td>
+                        <td>{{ review.author.email }}</td>
+                        {% if user.is_authenticated and perms.webapp.delete_product or perms.webapp.delete_update %}
+                            <td><a href="{% url 'webapp:review_delete' review.pk %}"><i class="fa-solid fa-trash"></i></a></td>
+                            <td><a href="{% url 'webapp:review_update' review.pk %}"><i class="fa-solid fa-pen"></i></a></td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

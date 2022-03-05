@@ -39,3 +39,8 @@
     text-align: center;
     border: solid 1px gray;
 }
+
+.pictureindex{
+    width: 500px;
+    height: 500px;
+}

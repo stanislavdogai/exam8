@@ -10,23 +10,29 @@
 {% endblock %}
 
 {% block content %}
-<div class="row row-cols-1 row-cols-md-2 g-5">
-{% for product in products %}
-    <div class="card">
-        <div class="card-body">
-            <a href="{% url 'webapp:product_view' product.pk %}" class=""><h5 class="card-title">{{ product.name }}</h5></a>
-            <p class="card-text">{{ product.get_category_display }}</p>
-            {% if perms.webapp.delete_product %}
-                <a class="btn btn-secondary" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
-            {% endif %}
-            {% if perms.webapp.change_product %}
-                <a class="btn btn-secondary" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a>
-            {% endif %}
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for product in products %}
+        <div class="col">
+            <div class="card">
+                {% if product.image %}
+                    <a class="pictureindex" href="{% url 'webapp:product_view' product.pk %}"><img src="{{ product.image.url }}" class="card-img-top" alt="фото не загрузилось"></a>
+                {% else %}
+                    <a class="pictureindex" href="{% url 'webapp:product_view' product.pk %}"><img src="https://s.aolcdn.com/commerce/autodata/images/20MBGEA1.jpg" class="card-img-top" alt="фото не загрузилось"></a>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.get_category_display }}</p>
+                    <p class="card-text">{{ product.description }}</p>
+                    {% if perms.webapp.delete_product %}
+                        <a class="btn btn-secondary" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                    {% endif %}
+                    {% if perms.webapp.change_product %}
+                        <a class="btn btn-secondary" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="card-footer">
-            <p class="card-text">Цена: {{ product.price }}</p>
-        </div>
-    </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
 {% endblock %}
