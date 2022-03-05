@@ -42,7 +42,7 @@
       {% for review in reviews %}
           {% if review.check_moderated == True %}
     <tr>
-      <td>{{ user.username }}</td>
+      <td><a href="{% url 'accounts:profile' user.id %}">{{ user.username }}</a></td>
       <td>{{ review.description }}</td>
       <td>{{ review.grade }}</td>
         <td>{{ user.email }}</td>

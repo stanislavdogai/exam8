@@ -70,12 +70,10 @@ class ReviewUpdate(UpdateView):
     form_class = ReviewForm
 
     def post(self, request, *args, **kwargs):
+
         review = get_object_or_404(Review, pk=kwargs.get('pk'))
         if review.check_moderated:
             review.check_moderated = False
             review.save()
-            return reverse('webapp:product_view', kwargs={'pk': review.product.pk})
-        return reverse('webapp:product_view', kwargs={'pk': review.product.pk})
+        return redirect(reverse('webapp:product_view', kwargs={'pk': review.product.pk}))
 
-    # def get_success_url(self):
-    #     return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk})
