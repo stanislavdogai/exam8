@@ -1,0 +1,11 @@
+{% csrf_token %}
+
+<div>
+
+{% for field in form %}
+    <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+    {{ field }}
+{% endfor %}
+</div>
+
+<button type="submit" value="{{ button_text }}" class="btn btn-dark mt-3">{{ button_text }}</button>

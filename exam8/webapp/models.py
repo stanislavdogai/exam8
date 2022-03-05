@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-
+from django.urls import reverse
 
 CATEGORY = [('other', 'Разное'), ('milk', 'Молочная продукция'), ('meat', 'МЯСО'), ('vegetables', 'Овощи'), ('drink', 'Напитки')]
 # Create your models here.
@@ -10,6 +10,12 @@ class Product(models.Model):
     category = models.CharField(max_length=15, default='other', null=False, blank=False, choices=CATEGORY, verbose_name='Категория')
     description = models.TextField(null=True, blank=True, verbose_name='Описание')
     image = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name='Картинка')
+
+    class Meta:
+        pass
+
+    def get_absolute_url(self):
+        return reverse('webapp:index')
 
 class Review(models.Model):
     author = models.ManyToManyField(User, related_name='reviews', blank=True, verbose_name='Автор')

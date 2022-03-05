@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="{% url "webapp:product_delete" product.pk %}" method="POST">
+    {% csrf_token %}
+        <h2>Вы действительно хотите удалить продукт {{ product.name }}</h2>
+        <input type="submit" value="Да">
+    </form>
+    <a href="{% url "webapp:product_view" product.pk %}">Нет</a>
+{% endblock %}

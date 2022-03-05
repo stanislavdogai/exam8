@@ -1,3 +1,17 @@
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
-# Create your views here.
+from .forms import MyUserCreateForm
+
+def register_view(request):
+    form = MyUserCreateForm()
+    if request.method == 'POST':
+        form = MyUserCreateForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            url = request.GET.get('next')
+            if url:
+                return redirect(url)
+            return redirect('webapp:product_index')
+    return render(request, 'registration/registration.html', {'form' : form})

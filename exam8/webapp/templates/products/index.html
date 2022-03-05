@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Продукты{% endblock %}
+
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'webapp:product_create' %}">Добавить продукт</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-2 g-5">
+{% for product in products %}
+    <div class="card">
+        <div class="card-body">
+            <a href="{% url 'webapp:product_view' product.pk %}" class=""><h5 class="card-title">{{ product.name }}</h5></a>
+            <p class="card-text">{{ product.get_category_display }}</p>
+                <a class="btn btn-secondary" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                <a class="btn btn-secondary" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a>
+        </div>
+        <div class="card-footer">
+            <p class="card-text">Цена: {{ product.price }}</p>
+        </div>
+    </div>
+    </div>
+{% endfor %}
+{% endblock %}
