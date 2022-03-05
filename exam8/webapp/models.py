@@ -17,11 +17,27 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('webapp:index')
 
+    def average(self):
+        sum = 0
+        count = 0
+        reviews = self.review.filter(check_moderated=True)
+        if reviews:
+            for i in reviews:
+                sum += i.grade
+                count += 1
+            return sum/count
+
+
+
 class Review(models.Model):
-    author = models.ManyToManyField(User, related_name='reviews', blank=True, verbose_name='Автор')
-    product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE, related_name='review', verbose_name='Продукт')
+    author = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE, blank=True, verbose_name='Автор')
+    product = models.ForeignKey('webapp.Product', blank=True, on_delete=models.CASCADE, related_name='review', verbose_name='Продукт')
     description = models.TextField(null=False, blank=False, verbose_name='Описание')
     grade = models.PositiveIntegerField(null=False, blank=False, validators=[MinValueValidator(1), MaxValueValidator(5)])
     check_moderated = models.BooleanField(default=False, verbose_name='Модерирование')
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now_add=True, verbose_name="Дата изменения")
+
+    def get_absolute_url(self):
+        return reverse('webapp:index')
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ user_obj.username }}</h5>
+            {% if user_obj.email %}
+                <p class="card-text">{{ user_obj.email }}</p>
+            {% endif %}
+            {% if user_obj.last_name %}
+                <p class="card-text"><{{ user_obj.last_name }}</p>
+            {% endif %}
+            {% if user_obj.first_name %}
+                <p class="card-text"><{{ user_obj.first_name }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

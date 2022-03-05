@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}View{% endblock %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'webapp:review_create' product.pk %}">Оставить отзыв</a>
+</li>
+{% endblock %}
+
+
 {% block content %}
 
 <div class="card text-center">
@@ -10,7 +17,44 @@
         <h5 class="card-title">Категория товара: {{ product.get_category_display }}</h5>
         <p class="card-text">Описание товара</p>
         <p class="card-text">{{ product.description }}</p>
+        {% if product.average %}
+        <p class="card-text">average = {{ product.average }}</p>
+        {% else %}
+        <p class="card-text">Оценок нет</p>
+        {% endif %}
     </div>
 </div>
+    <div>
+        <table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">Пользователь</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Оценка</th>
+        <th scope="col">email</th>
+
+        <th scope="col">Удалить</th>
+        <th scope="col">Изменить</th>
+
+    </tr>
+  </thead>
+  <tbody>
+      {% for review in reviews %}
+          {% if review.check_moderated == True %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ review.description }}</td>
+      <td>{{ review.grade }}</td>
+        <td>{{ user.email }}</td>
+    <td><a href="{% url 'webapp:review_delete' review.pk %}"><i class="fa-solid fa-trash"></i></a></td>
+    <td><a href="{% url 'webapp:review_update' review.pk %}"><i class="fa-solid fa-pen"></i></a></td>
+    </tr>
+          {% endif %}
+      {% endfor %}
+
+  </tbody>
+</table>
+
+    </div>
 
 {% endblock %}
