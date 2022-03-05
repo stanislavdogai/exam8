@@ -24,6 +24,11 @@
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.get_category_display }}</p>
                     <p class="card-text">{{ product.description }}</p>
+                    {% if product.average %}
+                        <p class="card-text">average: {{ product.average }}</p>
+                    {% else %}
+                        <p class="card-text">average: 0</p>
+                    {% endif %}
                     {% if perms.webapp.delete_product %}
                         <a class="btn btn-secondary" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
                     {% endif %}
