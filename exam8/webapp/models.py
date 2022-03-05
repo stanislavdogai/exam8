@@ -38,6 +38,11 @@ class Review(models.Model):
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now_add=True, verbose_name="Дата изменения")
 
+    class Meta:
+        permissions = [
+            ('can_view_not_moderated_list', 'Can view not moderated list')
+        ]
+
     def get_absolute_url(self):
         return reverse('webapp:index')
 

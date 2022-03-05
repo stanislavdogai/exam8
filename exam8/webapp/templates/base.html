@@ -42,6 +42,11 @@
                         <a href="{% url 'accounts:registration' %}?next={{ request_get_full_path }}" class="nav-link">Регистрация</a>
                     </li>
                 {% endif %}
+                    {% if perms.webapp.can_view_not_moderated_list %}
+                         <li class="nav-item">
+                            <a href="{% url 'webapp:review_notchecked' %}" class="nav-link">Не модерированные отзывы</a>
+                        </li>
+                    {% endif %}
             </ul>
         </div>
     </div>
